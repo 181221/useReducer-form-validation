@@ -1,61 +1,8 @@
 import React, { Component, useState, useReducer } from "react";
+import reducer from "./reducer";
+import ValidatorUtil from "./validator";
 import logo from "./logo.svg";
 import "./App.css";
-
-const reducer = (state, { el, type, form }) => {
-  switch (type) {
-    case "name": {
-      if (el === "123") {
-        return {
-          ...state,
-          navnFeilmelding: "navn kan ikke være null",
-          isValid: false
-        };
-      } else if (el === "") {
-        return {
-          ...state,
-          navnFeilmelding: "navn kan ikke være null",
-          isValid: false
-        };
-      }
-
-      return { ...state, navnFeilmelding: "" };
-    }
-    case "email": {
-      if (el === "") {
-        return {
-          ...state,
-          emailFeilmelding: "email kan ikke være null",
-          isValid: false
-        };
-      }
-      return { ...state, emailFeilmelding: "" };
-    }
-    case "password": {
-      if (el === "") {
-        return {
-          ...state,
-          passwordFeilmelding: "password kan ikke være null",
-          isValid: false
-        };
-      }
-      return { ...state, passwordFeilmelding: "" };
-    }
-    case "SUBMIT": {
-      console.log("state", state);
-      console.log("isValid", state.isValid);
-      if (!state.isValid) {
-        return { ...state, isValid: true };
-      } else {
-        console.log("form", form);
-        form.submit();
-      }
-    }
-    default: {
-      return state;
-    }
-  }
-};
 
 const useFormInput = (initialValue, dispatch) => {
   const [value, setValue] = useState(initialValue);
@@ -71,7 +18,13 @@ const useFormInput = (initialValue, dispatch) => {
 };
 
 const Form = () => {
+  let validator = new ValidatorUtil();
   let feilmeldinger = {
+    cases: [
+      { name: "name", handler: validator.nameValidator },
+      { name: "password", handler: validator.passwordValidator },
+      { name: "email", handler: validator.emailValidator }
+    ],
     navnFeilmelding: "",
     emailFeilmelding: "",
     passwordFeilmelding: "",
