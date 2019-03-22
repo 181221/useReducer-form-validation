@@ -1,7 +1,6 @@
-import React, { Component, useState, useReducer } from "react";
-import reducer from "./reducer";
+import React from "react";
 import { validatorUtil } from "./validator";
-import logo from "./logo.svg";
+import useReducerHandler from "./hooks/hooks";
 import "./App.css";
 
 let initalState = {
@@ -22,41 +21,18 @@ let initalState = {
   isValid: true
 };
 
-const useFormInput = (initialValue, dispatch) => {
-  const [value, setValue] = useState(initialValue);
-  const handleChange = ({ target: { value, name } }) => {
-    setValue(value);
-    dispatch({ type: name, el: value });
-  };
-
-  return {
-    value,
-    onChange: handleChange
-  };
-};
-
 const Form = () => {
   const [
-    { nameFeilmelding, passwordFeilmelding, emailFeilmelding },
-    dispatch
-  ] = useReducer(reducer, initalState);
-
-  const name = useFormInput("", dispatch);
-  const email = useFormInput("", dispatch);
-  const password = useFormInput("", dispatch);
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    let elements = Array.from(e.target.children);
-    elements.map(el => {
-      const { name, value } = el;
-      dispatch({
-        type: name,
-        el: value
-      });
-    });
-    dispatch({ type: "submit", form: e.target });
-  };
+    handleSubmit,
+    {
+      name,
+      email,
+      password,
+      nameFeilmelding,
+      passwordFeilmelding,
+      emailFeilmelding
+    }
+  ] = useReducerHandler(initalState);
   return (
     <form className="form" onSubmit={handleSubmit}>
       <input name="name" type="text" placeholder="name..." {...name} />
