@@ -1,8 +1,26 @@
 import React, { Component, useState, useReducer } from "react";
 import reducer from "./reducer";
-import ValidatorUtil from "./validator";
+import { validatorUtil } from "./validator";
 import logo from "./logo.svg";
 import "./App.css";
+
+let initalState = {
+  cases: [
+    { name: "name", handler: validatorUtil.nameValidator, nameFeilmelding: "" },
+    {
+      name: "password",
+      handler: validatorUtil.passwordValidator,
+      passwordFeilmelding: ""
+    },
+    {
+      name: "email",
+      handler: validatorUtil.emailValidator,
+      emailFeilmelding: ""
+    },
+    { name: "submit", handler: validatorUtil.submit }
+  ],
+  isValid: true
+};
 
 const useFormInput = (initialValue, dispatch) => {
   const [value, setValue] = useState(initialValue);
@@ -18,22 +36,10 @@ const useFormInput = (initialValue, dispatch) => {
 };
 
 const Form = () => {
-  let validator = new ValidatorUtil();
-  let feilmeldinger = {
-    cases: [
-      { name: "name", handler: validator.nameValidator },
-      { name: "password", handler: validator.passwordValidator },
-      { name: "email", handler: validator.emailValidator }
-    ],
-    navnFeilmelding: "",
-    emailFeilmelding: "",
-    passwordFeilmelding: "",
-    isValid: true
-  };
   const [
-    { emailFeilmelding, passwordFeilmelding, navnFeilmelding },
+    { nameFeilmelding, passwordFeilmelding, emailFeilmelding },
     dispatch
-  ] = useReducer(reducer, feilmeldinger);
+  ] = useReducer(reducer, initalState);
 
   const name = useFormInput("", dispatch);
   const email = useFormInput("", dispatch);
@@ -49,12 +55,12 @@ const Form = () => {
         el: value
       });
     });
-    dispatch({ type: "SUBMIT", form: e.target });
+    dispatch({ type: "submit", form: e.target });
   };
   return (
     <form className="form" onSubmit={handleSubmit}>
       <input name="name" type="text" placeholder="name..." {...name} />
-      {navnFeilmelding}
+      {nameFeilmelding}
       <input name="email" type="text" placeholder="email..." {...email} />
       {emailFeilmelding}
       <input

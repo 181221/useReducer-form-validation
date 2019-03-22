@@ -9,15 +9,9 @@ const reducer = (state, { el, type, form }) => {
     case state.cases[2].name: {
       return state.cases[2].handler(state, el);
     }
-    case "SUBMIT": {
-      console.log("state", state);
-      console.log("isValid", state.isValid);
-      if (!state.isValid) {
-        return { ...state, isValid: true };
-      } else {
-        console.log("form", form);
-        form.submit();
-      }
+    case state.cases[3].name: {
+      // Submit
+      return state.cases[3].handler(state, form);
     }
     default: {
       return state;

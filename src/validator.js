@@ -1,21 +1,34 @@
 class ValidatorUtil {
-  constructor() {}
+  constructor() {
+    console.log("validator called");
+  }
   nameValidator(state, el) {
     if (el === "123") {
       return {
         ...state,
-        navnFeilmelding: "navn kan ikke være 123",
+        nameFeilmelding: "navn kan ikke være 123",
         isValid: false
       };
     } else if (el === "") {
       return {
         ...state,
-        navnFeilmelding: "navn kan ikke være null",
+        nameFeilmelding: "navn kan ikke være null",
         isValid: false
       };
     }
 
-    return { ...state, navnFeilmelding: "" };
+    return { ...state, nameFeilmelding: "" };
+  }
+
+  passwordValidator(state, el) {
+    if (el === "") {
+      return {
+        ...state,
+        passwordFeilmelding: "passord kan ikek være null",
+        isValid: false
+      };
+    }
+    return { ...state, passwordFeilmelding: "" };
   }
 
   emailValidator(state, el) {
@@ -28,15 +41,17 @@ class ValidatorUtil {
     }
     return { ...state, emailFeilmelding: "" };
   }
-  passwordValidator(state, el) {
-    if (el === "") {
-      return {
-        ...state,
-        passwordFeilmelding: "passord kan ikek være null",
-        isValid: false
-      };
+
+  submit(state, form) {
+    console.log("state", state);
+    console.log("isValid", state.isValid);
+    if (!state.isValid) {
+      return { ...state, isValid: true };
+    } else {
+      console.log("form", form);
+      form.submit();
+      return { ...state, isValid: true };
     }
-    return { ...state, passwordFeilmelding: "" };
   }
 }
-export default ValidatorUtil;
+export const validatorUtil = new ValidatorUtil();
