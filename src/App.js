@@ -7,15 +7,15 @@ import "./App.css";
 let initalState = {
   name: {
     action: actions.NAME,
-    handler: validatorUtil.nameValidator
+    handler: validatorUtil.name
   },
   email: {
     action: actions.EMAIL,
-    handler: validatorUtil.emailValidator
+    handler: validatorUtil.email
   },
   password: {
     action: actions.PASSWORD,
-    handler: validatorUtil.passwordValidator
+    handler: validatorUtil.password
   },
   submit: {
     action: actions.SUBMIT,
@@ -23,7 +23,6 @@ let initalState = {
   },
   isValid: true
 };
-
 const Form = () => {
   const [
     handleSubmit,

@@ -2,8 +2,9 @@ class ValidatorUtil {
   constructor() {
     console.log("validator called");
   }
-  nameValidator(state, el) {
+  name(state, el) {
     if (el === "123") {
+      state.name.feilmelding = "navn kan ikke være 123";
       return {
         ...state,
         nameFeilmelding: "navn kan ikke være 123",
@@ -20,7 +21,7 @@ class ValidatorUtil {
     return { ...state, nameFeilmelding: "" };
   }
 
-  passwordValidator(state, el) {
+  password(state, el) {
     if (el === "") {
       return {
         ...state,
@@ -31,7 +32,7 @@ class ValidatorUtil {
     return { ...state, passwordFeilmelding: "" };
   }
 
-  emailValidator(state, el) {
+  email(state, el) {
     if (el === "") {
       return {
         ...state,
