@@ -1,23 +1,26 @@
 import React from "react";
 import { validatorUtil } from "./validator";
-import useReducerHandler from "./hooks/hooks";
+import useReducerHandler from "./hooks/useReducerHandler";
+import { actions } from "./reducers/reducer";
 import "./App.css";
 
 let initalState = {
-  cases: [
-    { name: "name", handler: validatorUtil.nameValidator, nameFeilmelding: "" },
-    {
-      name: "password",
-      handler: validatorUtil.passwordValidator,
-      passwordFeilmelding: ""
-    },
-    {
-      name: "email",
-      handler: validatorUtil.emailValidator,
-      emailFeilmelding: ""
-    },
-    { name: "submit", handler: validatorUtil.submit }
-  ],
+  name: {
+    action: actions.NAME,
+    handler: validatorUtil.nameValidator
+  },
+  email: {
+    action: actions.EMAIL,
+    handler: validatorUtil.emailValidator
+  },
+  password: {
+    action: actions.PASSWORD,
+    handler: validatorUtil.passwordValidator
+  },
+  submit: {
+    action: actions.SUBMIT,
+    handler: validatorUtil.submit
+  },
   isValid: true
 };
 
@@ -35,12 +38,17 @@ const Form = () => {
   ] = useReducerHandler(initalState);
   return (
     <form className="form" onSubmit={handleSubmit}>
-      <input name="name" type="text" placeholder="name..." {...name} />
+      <input name={actions.NAME} type="text" placeholder="name..." {...name} />
       {nameFeilmelding}
-      <input name="email" type="text" placeholder="email..." {...email} />
+      <input
+        name={actions.EMAIL}
+        type="text"
+        placeholder="email..."
+        {...email}
+      />
       {emailFeilmelding}
       <input
-        name="password"
+        name={actions.PASSWORD}
         type="password"
         placeholder="password..."
         {...password}
