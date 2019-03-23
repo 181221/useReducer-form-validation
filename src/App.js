@@ -1,6 +1,7 @@
 import React from "react";
 import { validatorUtil } from "./validator";
 import useReducerHandler from "./hooks/useReducerHandler";
+import useFormInputHandler from "./hooks/useFormInput";
 import { actions } from "./reducers/reducer";
 import "./App.css";
 
@@ -26,15 +27,11 @@ let initalState = {
 const Form = () => {
   const [
     handleSubmit,
-    {
-      name,
-      email,
-      password,
-      nameFeilmelding,
-      passwordFeilmelding,
-      emailFeilmelding
-    }
+    { dispatch, nameFeilmelding, passwordFeilmelding, emailFeilmelding }
   ] = useReducerHandler(initalState);
+
+  const { name, email, password } = useFormInputHandler(dispatch);
+
   return (
     <form className="form" onSubmit={handleSubmit}>
       <input name={actions.NAME} type="text" placeholder="name..." {...name} />

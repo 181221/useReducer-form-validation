@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const useFormInput = (initialValue, dispatch) => {
+const useFormInput = (dispatch, initialValue = "") => {
   const [value, setValue] = useState(initialValue);
   const handleChange = ({ target: { value, name } }) => {
     setValue(value);
@@ -12,4 +12,16 @@ const useFormInput = (initialValue, dispatch) => {
     onChange: handleChange
   };
 };
-export default useFormInput;
+
+const useFormInputHandler = dispatch => {
+  const name = useFormInput(dispatch);
+  const email = useFormInput(dispatch);
+  const password = useFormInput(dispatch);
+
+  return {
+    name,
+    email,
+    password
+  };
+};
+export default useFormInputHandler;

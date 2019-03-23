@@ -1,5 +1,4 @@
 import { useReducer } from "react";
-import useFormInput from "./useFormInput";
 import reducer, { actions } from "../reducers/reducer";
 
 const useReducerHandler = initalState => {
@@ -7,10 +6,6 @@ const useReducerHandler = initalState => {
     { nameFeilmelding, passwordFeilmelding, emailFeilmelding },
     dispatch
   ] = useReducer(reducer, initalState);
-
-  const name = useFormInput("", dispatch);
-  const email = useFormInput("", dispatch);
-  const password = useFormInput("", dispatch);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -26,9 +21,7 @@ const useReducerHandler = initalState => {
   };
 
   const state = {
-    name,
-    email,
-    password,
+    dispatch,
     nameFeilmelding,
     passwordFeilmelding,
     emailFeilmelding
